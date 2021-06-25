@@ -81,10 +81,10 @@ namespace TestingTheTestingStrategy.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult> UpdateGtcAsync(int id, [FromBody] GtcModel GtcModel)
+        public async Task<ActionResult> UpdateGtcAsync([FromBody] GtcModel GtcModel)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace TestingTheTestingStrategy.Controllers
                 }
                 else
                 {
-                    return NotFound(id);
+                    return NotFound(GtcModel.Id);
                 }
             }
             catch (Exception ex)

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -92,6 +94,22 @@ namespace RestApiSample
             }
 
             app.UseStaticFiles();
+            app.UseSerilogRequestLogging(options =>
+            {
+                // Customize the message template
+                options.MessageTemplate = "SerilogRequestLogging: {RequestHost} {RequestMethod} {RequestPath} responded {StatusCode} with {ResponseLength} bytes in {Elapsed:N0} ms. {CorrelationId}";
+
+                // Emit Information level events instead of the defaults
+                options.GetLevel = (httpContext, elapsed, ex) => LogEventLevel.Information;
+
+                // Attach additional properties to the request completion event
+                options.EnrichDiagnosticContext = (diagnosticContext, httpContext) =>
+                {
+                    diagnosticContext.Set("ResponseLength", httpContext.Response.ContentLength);
+                    diagnosticContext.Set("CorrelationId", httpContext.TraceIdentifier);
+                    diagnosticContext.Set("RequestHost", httpContext.Request.Host.Value);
+                };
+            });
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
