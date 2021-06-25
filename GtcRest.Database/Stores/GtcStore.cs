@@ -58,7 +58,7 @@ namespace GtcRest.Database.Stores
             try
             {
                 existingSet = await _db.Gtcs.SingleAsync(c =>
-                    c.Description == gtc.Description);
+                    c.Id == gtc.Id);
 
                 await _db.SaveChangesAsync();
                 return existingSet;
