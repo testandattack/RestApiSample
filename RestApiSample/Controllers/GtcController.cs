@@ -7,9 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace TestingTheTestingStrategy.Controllers
+
+namespace RestApiSample.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
     public class GtcController : ControllerBase
     {
