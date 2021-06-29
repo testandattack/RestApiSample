@@ -53,11 +53,7 @@ namespace RestApiSample
             services.AddSwaggerGen(c =>
             {
                 var version = Assembly.GetExecutingAssembly().GetName().Version;
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Gtc API",
-                    Version = $"{version.Major}.{version.Minor}.{version.Build}",
-                });
+                SwaggerConfigOptions.ConfigureSwagger(c, _settings, _environment);
             });
 
             services.AddControllers();
