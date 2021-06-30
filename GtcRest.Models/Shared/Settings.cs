@@ -1,4 +1,7 @@
-﻿namespace GtcRest.Models.Shared
+﻿using Microsoft.Extensions.Options;
+using Moq;
+
+namespace GtcRest.Models.Shared
 {
     public class Settings
     {
@@ -6,6 +9,13 @@
         public Core Core { get; set; }
 
         public Settings() { }
+
+        public static IOptionsSnapshot<Settings> CreateIOptionSnapshotMock(Settings settings)
+        {
+            var mock = new Mock<IOptionsSnapshot<Settings>>();
+            mock.Setup(m => m.Value).Returns(settings);
+            return mock.Object;
+        }
     }
 
     public class Core
