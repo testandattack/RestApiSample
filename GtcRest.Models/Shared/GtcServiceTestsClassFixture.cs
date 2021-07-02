@@ -16,8 +16,7 @@ namespace GtcRest.Models.Shared
             // Read the core settings from appsettings, environment, secrets
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true)
-                .AddEnvironmentVariables()
-                .AddUserSecrets<GtcServiceTestsClassFixture>();
+                .AddEnvironmentVariables();
             IConfigurationRoot settings = configBuilder.Build();
 
             // Bind the appSettings to the config

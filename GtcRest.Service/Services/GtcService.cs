@@ -23,18 +23,6 @@ namespace GtcRest.Service.Services
             _settings = settings.Value;
         }
 
-        public async Task<List<GtcModel>> GetGtcAsync()
-        {
-            var setList = await _gtcRepo.GetGtcAsync();
-            return setList;
-        }
-
-        public async Task<GtcModel> GetGtcAsync(int id)
-        {
-            var gtc = await _gtcRepo.GetGtcAsync(id);
-            return gtc;
-        }
-
         public async Task<GtcModel> CreateGtcAsync(GtcModel GtcModel)
         {
             var result = await _gtcRepo.CreateGtcAsync(GtcModel);
@@ -47,6 +35,18 @@ namespace GtcRest.Service.Services
             {
                 return result;
             }
+        }
+
+        public async Task<List<GtcModel>> GetGtcAsync()
+        {
+            var setList = await _gtcRepo.GetGtcAsync();
+            return setList;
+        }
+
+        public async Task<GtcModel> GetGtcAsync(int id)
+        {
+            var gtc = await _gtcRepo.GetGtcAsync(id);
+            return gtc;
         }
 
         public async Task<GtcModel> UpdateGtcAsync(GtcModel GtcModel)
