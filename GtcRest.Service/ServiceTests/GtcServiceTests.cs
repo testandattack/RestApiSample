@@ -19,10 +19,9 @@ namespace GtcRest.Service.ServiceTests
         // service code
         private GtcServiceTestsClassFixture _classFixture;
         private MockGtcRepo _mockGtcRepo;
-        private IOptionsSnapshot<Settings> _settings;
         private GtcService _gtcService;
 
-        // Build an input model object and a result model object
+        // Build input model objects and result model objects
         private GtcModel _inputCreateGtcModel;
         private GtcModel _updateGtcModel;
         private GtcModel _resultGtcModel;
@@ -33,7 +32,6 @@ namespace GtcRest.Service.ServiceTests
         public GtcServiceTests(GtcServiceTestsClassFixture fixture, ITestOutputHelper output)
         {
             _classFixture = fixture;
-            _settings = Settings.CreateIOptionSnapshotMock(_classFixture.settings);
             _classFixture.ConfigureLogging(output);
             ParameterSetup();
         }
@@ -74,7 +72,7 @@ namespace GtcRest.Service.ServiceTests
             // Arrange
             int expectedResult = 3;
             _mockGtcRepo = new MockGtcRepo().MockCreateGtcAsync(_resultGtcModel);
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.CreateGtcAsync(_inputCreateGtcModel);
@@ -88,7 +86,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockCreateGtcAsyncFails();
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.CreateGtcAsync(_inputCreateGtcModel);
@@ -102,7 +100,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockGetGtcAsync(_resultGtcModel);
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.GetGtcAsync(_resultGtcModel.Id);
@@ -116,7 +114,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockGetGtcAsyncFails();
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.GetGtcAsync(-1);
@@ -130,7 +128,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockGetGtcAsync(_resultGtcModels);
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.GetGtcAsync();
@@ -144,7 +142,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockGetGtcAsync(new List<GtcModel>());
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.GetGtcAsync();
@@ -158,7 +156,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockUpdateGtcAsync(_updateGtcModel);
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.UpdateGtcAsync(_updateGtcModel);
@@ -172,7 +170,7 @@ namespace GtcRest.Service.ServiceTests
         {
             // Arrange
             _mockGtcRepo = new MockGtcRepo().MockUpdateGtcAsyncFails();
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.UpdateGtcAsync(_updateGtcModel);
@@ -188,13 +186,15 @@ namespace GtcRest.Service.ServiceTests
             _mockGtcRepo = new MockGtcRepo()
                 .MockDeleteGtcAsync(OperationResult.Deleted)
                 .MockGetGtcAsync(_resultGtcModel);
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.DeleteGtcAsync(3);
 
             // Assert
             Assert.Equal(OperationResult.Deleted, result.Result);
+            // Also validate that the Delete mock got called one time
+            _mockGtcRepo.VerifyDeleteGtcAsync(Times.Once());
 
 
         }
@@ -206,7 +206,7 @@ namespace GtcRest.Service.ServiceTests
             _mockGtcRepo = new MockGtcRepo()
                 .MockDeleteGtcAsync(OperationResult.NotFound)
                 .MockGetGtcAsyncFails();
-            _gtcService = new GtcService(_settings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
+            _gtcService = new GtcService(_classFixture.snapshotSettings, new NullLogger<GtcService>(), _mockGtcRepo.Object);
 
             // Act
             var result = _gtcService.DeleteGtcAsync(5);

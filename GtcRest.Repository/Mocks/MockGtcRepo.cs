@@ -10,7 +10,7 @@ namespace GtcRest.Repository.Mocks
 
     public class MockGtcRepo : Mock<IGtcRepo>
     {
-
+        // CreateGtcAsync(GtcModel GtcModel)
         public MockGtcRepo MockCreateGtcAsync(GtcModel result)
         {
             this.Setup(x => x.CreateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync(result);
@@ -23,6 +23,13 @@ namespace GtcRest.Repository.Mocks
             return this;
         }
 
+        // GetGtcAsync()
+        public MockGtcRepo MockGetGtcAsync(List<GtcModel> result)
+        {
+            this.Setup(x => x.GetGtcAsync()).ReturnsAsync(result);
+            return this;
+        }
+        
         // GetGtcAsync(int id)
         public MockGtcRepo MockGetGtcAsync(GtcModel result)
         {
@@ -36,13 +43,7 @@ namespace GtcRest.Repository.Mocks
             return this;
         }
 
-        // GetGtcAsync()
-        public MockGtcRepo MockGetGtcAsync(List<GtcModel> result)
-        {
-            this.Setup(x => x.GetGtcAsync()).ReturnsAsync(result);
-            return this;
-        }
-
+        //UpdateGtcAsync(GtcModel Gtc)
         public MockGtcRepo MockUpdateGtcAsync(GtcModel result)
         {
             this.Setup(x => x.UpdateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync(result);

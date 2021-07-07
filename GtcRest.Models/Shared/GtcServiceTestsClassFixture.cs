@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,21 @@ namespace GtcRest.Models.Shared
     {
         public Settings settings { get; set; }
 
+        public IOptionsSnapshot<Settings> snapshotSettings { get; private set; }
+
         public GtcServiceTestsClassFixture()
         {
             // Read the core settings from appsettings, environment, secrets
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true)
                 .AddEnvironmentVariables();
-            IConfigurationRoot settings = configBuilder.Build();
+            IConfigurationRoot rootSettings = configBuilder.Build();
 
             // Bind the appSettings to the config
-            this.settings = new Settings();
-            settings.Bind(this.settings);
+            settings = new Settings();
+            rootSettings.Bind(settings);
+
+            snapshotSettings = Settings.CreateIOptionSnapshotMock(settings);
         }
 
         // This takes the place of the logger init in the main app's program.cs file. We need
