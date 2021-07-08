@@ -9,10 +9,10 @@ namespace GtcRest.Interfaces.Repository
     {
         Task<GtcModel> CreateGtcAsync(GtcModel GtcModel);
         
-        Task<GtcModel> GetGtcAsync(int Id);
-        
         Task<List<GtcModel>> GetGtcAsync();
-        
+
+        Task<GtcModel> GetGtcAsync(int Id);
+
         Task<GtcModel> UpdateGtcAsync(GtcModel Gtc);
                 
         Task<OperationResult> DeleteGtcAsync(GtcModel GtcModel);

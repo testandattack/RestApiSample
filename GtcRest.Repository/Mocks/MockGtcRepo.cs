@@ -10,21 +10,16 @@ namespace GtcRest.Repository.Mocks
 
     public class MockGtcRepo : Mock<IGtcRepo>
     {
-
-        // Setup the CreateGtcAsync call so that it can return either 
-        // a successful GtcModel or null (if the call fails).
+        // CreateGtcAsync(GtcModel GtcModel)
         public MockGtcRepo MockCreateGtcAsync(GtcModel result)
         {
-            this.SetupSequence(x => x.CreateGtcAsync(It.IsAny<GtcModel>()))
-                .ReturnsAsync(result)
-                .ReturnsAsync((GtcModel)null);
+            this.Setup(x => x.CreateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync(result);
             return this;
         }
 
-        // GetGtcAsync(int id)
-        public MockGtcRepo MockGetGtcAsync(GtcModel result)
+        public MockGtcRepo MockCreateGtcAsyncFails()
         {
-            this.Setup(x => x.GetGtcAsync(It.IsAny<int>())).ReturnsAsync(result);
+            this.Setup(x => x.CreateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync((GtcModel)null);
             return this;
         }
 
@@ -34,14 +29,30 @@ namespace GtcRest.Repository.Mocks
             this.Setup(x => x.GetGtcAsync()).ReturnsAsync(result);
             return this;
         }
+        
+        // GetGtcAsync(int id)
+        public MockGtcRepo MockGetGtcAsync(GtcModel result)
+        {
+            this.Setup(x => x.GetGtcAsync(It.IsAny<int>())).ReturnsAsync(result);
+            return this;
+        }
 
-        // Setup the UpdateGtcAsync call so that it can return either 
-        // a successful GtcModel or null (if the call fails).
+        public MockGtcRepo MockGetGtcAsyncFails()
+        {
+            this.Setup(x => x.GetGtcAsync(It.IsAny<int>())).ReturnsAsync((GtcModel)null);
+            return this;
+        }
+
+        //UpdateGtcAsync(GtcModel Gtc)
         public MockGtcRepo MockUpdateGtcAsync(GtcModel result)
         {
-            this.SetupSequence(x => x.UpdateGtcAsync(It.IsAny<GtcModel>()))
-                .ReturnsAsync(result)
-                .ReturnsAsync((GtcModel)null);
+            this.Setup(x => x.UpdateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync(result);
+            return this;
+        }
+
+        public MockGtcRepo MockUpdateGtcAsyncFails()
+        {
+            this.Setup(x => x.UpdateGtcAsync(It.IsAny<GtcModel>())).ReturnsAsync((GtcModel)null);
             return this;
         }
 
