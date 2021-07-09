@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ContosoRestApiSample</name>
+    </assembly>
+    <members>
+        <member name="T:RestApiSample.Controllers.ContosoController">
+            <summary>
+            This controller is the primary entry point for all Contoso object calls
+            </summary>
+        </member>
+        <member name="M:RestApiSample.Controllers.ContosoController.CreateContosoAsync(ContosoRest.Models.Domain.ContosoModel)">
+            <summary>
+            Creates a new ContosoModel.
+            </summary>
+            <remarks></remarks>
+            <param name="ContosoModel"></param>
+            <returns>the Id of the created <see cref="T:ContosoRest.Models.Domain.ContosoModel"/> or 'Bad Request' if the call fails.</returns>
+        </member>
+        <member name="M:RestApiSample.Controllers.ContosoController.GetContosoAsync">
+            <summary>
+            Gets all ContosoModel items
+            </summary>
+            <remarks></remarks>
+            <returns>a List of <see cref="T:ContosoRest.Models.Domain.ContosoModel"/> items</returns>
+        </member>
+        <member name="M:RestApiSample.Controllers.ContosoController.GetContosoAsync(System.Int32)">
+            <summary>
+            Gets a ContosoModel item
+            </summary>
+            <remarks></remarks>
+            <param name="id" example="1">The Id of the item to retrieve.</param>
+            <returns>a <see cref="T:ContosoRest.Models.Domain.ContosoModel"/> item</returns>
+        </member>
+        <member name="M:RestApiSample.Controllers.ContosoController.UpdateContosoAsync(ContosoRest.Models.Domain.ContosoModel)">
+            <summary>
+            Updates a ContosoModel item.
+            </summary>
+            <remarks></remarks>
+            <param name="ContosoModel">The item, containing the changes, to update.</param>
+            <returns>OK if successful, 'Not Found' if the item's id was not found, or 'Bad Request' if the call fails.</returns>
+        </member>
+        <member name="M:RestApiSample.Controllers.ContosoController.DeleteContosoAsync(System.Int32)">
+            <summary>
+            Deletes a ContosoModel item.
+            </summary>
+            <remarks></remarks>
+            <param name="id" example="1">The Id of the item to delete.</param>
+            <returns>'No Content'(success) if successful, 'Not Found' if the item's id was not found, or Bad Request if the call fails.</returns>
+        </member>
+    </members>
+</doc>

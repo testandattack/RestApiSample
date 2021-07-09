@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GtcRest.Models\GtcRest.Models.csproj" />
+    <ProjectReference Include="..\ContosoRest.Models\ContosoRest.Models.csproj" />
   </ItemGroup>
 
 </Project>
