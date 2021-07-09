@@ -1,7 +1,7 @@
 ﻿# Repo Mocking Overview
 
 ### Repo Layer Methods. 
-Each one needs at least one mock, but any methods that can return a `null` value will need two mocks.In addition we are using a Moq feature called [verify](https://docs.educationsmediagroup.com/unit-testing-csharp/moq/verifications#explicit-verification) to validate the behavior of the Delete method
+Each public method needs at least one mock, but any methods that can return a `null` value will need at least two mocks.In addition we are using a Moq feature called [verify](https://docs.educationsmediagroup.com/unit-testing-csharp/moq/verifications#explicit-verification) to validate the behavior of the Delete method
 ```csharp
         Task<ContosoModel> CreateContosoAsync(ContosoModel ContosoModel);
         Task<List<ContosoModel>> GetContosoAsync();

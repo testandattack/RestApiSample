@@ -98,8 +98,8 @@ Here we see a test that will execute the 'CreateContoso' method inside the 'Cont
         public void ContosoService_CreateContoso_Valid()
 ```
 ### The Parts of the test itself
-I follow the Arrange, Act, Assert format for my unit tests. 
-**Arrange**
+I follow the [4 Phase Test](http://xunitpatterns.com/Four%20Phase%20Test.html) approach for unit tests that use Mocks. 
+**Setup**
 - First, we set an expected result.
 - Next we create the necessary Repo Mock that the service will need.
 - Finally we start the actual service, passing in the objects that the Service receives when being loaded inside the ASP.NET Core application:
@@ -107,35 +107,38 @@ I follow the Arrange, Act, Assert format for my unit tests.
     - a Logger Service (we pass in the null logger service because we don't need to capture application logging during testing).
     - the Mocked ContosoRepo we just created
 ```csharp
-    // Arrange
+    // Setup
     int expectedResult = 3;
     _mockContosoRepo = new MockContosoRepo().MockCreateContosoAsync(_resultContosoModel);
     _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 ```
-**Act**
+**Exercise**
 We call the method being tested, passing in one of the parameters we created in the constructor, and assign the response to a variable
 ```csharp
-            // Act
+            // Exercise
             var result = _contosoService.CreateContosoAsync(_inputCreateContosoModel);
 ```
-**Assert**
+**Verify**
 We assert the expected response against the actual response
 ```csharp
-            // Assert
+            // Verify
             Assert.Equal(expectedResult, result.Result.Id);
 ```
+**Teardown**
+If there are any Test Double objects that need to be reset, or data that should be restored, we do that here.
+
 ### Handling methods that can return a null value
 Earlier, I mentioned the need to create a separate Mock for handling tests where a null response needs to be produced. The CreateContosoAsync call is one where a null can be returned. This is why the Arrange and Assert portions of the ```ContosoService_CreateContoso_Invalid()``` method are different than the same parts of the ```ContosoService_CreateContoso_Valid``` method.
 - We call a different Mock setup.
 - We do not pass in an expected response (you can't pass in a ```null``` value).
 - We have to Assert against an evaluation of the result. xUnit does not provide any mechanism to test for null  (nor does it need to if you use this methodology).
 ```csharp
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockCreateContosoAsyncFails();
 ```
 
 ```csharp
-            // Assert
+            // Verify
             Assert.True(result.Result == null);
 ```
 ### Handling methods that make multiple Repo calls
@@ -153,14 +156,14 @@ the DeleteContosoAsync() call in our service makes a call to `GetContosoAsync()`
 ```
 Therefore, we need to mock both of those calls in our test setups For the test that works, it looks like this:
 ```csharp
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo()
                 .MockDeleteContosoAsync(OperationResult.Deleted)
                 .MockGetContosoAsync(_resultContosoModel);
 ```
 In the test that fails, it looks like this:
 ```csharp
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo()
                 .MockDeleteContosoAsync(OperationResult.NotFound)
                 .MockGetContosoAsyncFails();
@@ -171,14 +174,14 @@ Now we can complete the tests.
 In our Repo Mock, we created a mock for successful delete calls. We also created a [verify](https://docs.educationsmediagroup.com/unit-testing-csharp/moq/verifications#explicit-verification) mock that is tied to the Repo's DeleteContosoAsync call. To use that verification, we add a call to each test that validates how many times the Delete mock gets called. 
 For the **Valid** test:
 ```csharp
-            // Assert
+            // Verify
             Assert.Equal(OperationResult.Deleted, result.Result);
             // Also validate that the Delete mock got called one time
             _mockContosoRepo.VerifyDeleteContosoAsync(Times.Once());
 ```
 For the **Invalid** test:
 ```csharp
-            // Assert
+            // Verify
             Assert.Equal(OperationResult.NotFound, result.Result);
             // Also validate that the Delete mock never got called
             _mockContosoRepo.VerifyDeleteContosoAsync(Times.Never());

@@ -8,13 +8,13 @@ using Xunit.Abstractions;
 
 namespace ContosoRest.Models.Shared
 {
-    public class ContosoServiceTestsClassFixture : IDisposable
+    public class ServiceTestsClassFixture : IDisposable
     {
         public Settings settings { get; set; }
 
         public IOptionsSnapshot<Settings> snapshotSettings { get; private set; }
 
-        public ContosoServiceTestsClassFixture()
+        public ServiceTestsClassFixture()
         {
             // Read the core settings from appsettings, environment, secrets
             IConfigurationBuilder configBuilder = new ConfigurationBuilder()

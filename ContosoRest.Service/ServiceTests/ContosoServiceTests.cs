@@ -12,12 +12,12 @@ using Xunit.Abstractions;
 
 namespace ContosoRest.Service.ServiceTests
 {
-    public class ContosoServiceTests : IClassFixture<ContosoServiceTestsClassFixture>
+    public class ContosoServiceTests : IClassFixture<ServiceTestsClassFixture>
     {
         #region -- Properties -----
         // Define all of the "injectable" items to allow the execution of the 
         // service code
-        private ContosoServiceTestsClassFixture _classFixture;
+        private ServiceTestsClassFixture _classFixture;
         private MockContosoRepo _mockContosoRepo;
         private ContosoService _contosoService;
 
@@ -29,7 +29,7 @@ namespace ContosoRest.Service.ServiceTests
         #endregion
 
         #region -- Constructor/Setup -----
-        public ContosoServiceTests(ContosoServiceTestsClassFixture fixture, ITestOutputHelper output)
+        public ContosoServiceTests(ServiceTestsClassFixture fixture, ITestOutputHelper output)
         {
             _classFixture = fixture;
             _classFixture.ConfigureLogging(output);
@@ -69,152 +69,170 @@ namespace ContosoRest.Service.ServiceTests
         [Fact]
         public void ContosoService_CreateContoso_Valid()
         {
-            // Arrange
+            // Setup
             int expectedResult = 3;
             _mockContosoRepo = new MockContosoRepo().MockCreateContosoAsync(_resultContosoModel);
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.CreateContosoAsync(_inputCreateContosoModel);
 
-            // Assert
+            // Verify
             Assert.Equal(expectedResult, result.Result.Id);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_CreateContoso_Invalid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockCreateContosoAsyncFails();
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.CreateContosoAsync(_inputCreateContosoModel);
 
-            // Assert
+            // Verify
             Assert.True(result.Result == null);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_GetContoso_Single_Valid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockGetContosoAsync(_resultContosoModel);
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.GetContosoAsync(_resultContosoModel.Id);
 
-            // Assert
+            // Verify
             Assert.Equal(_resultContosoModel, result.Result);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_GetContoso_Single_Invalid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockGetContosoAsyncFails();
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.GetContosoAsync(-1);
 
-            // Assert
+            // Verify
             Assert.True(result.Result == null);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_GetContoso_Multiple_Valid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockGetContosoAsync(_resultContosoModels);
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.GetContosoAsync();
 
-            // Assert
+            // Verify
             Assert.Equal(_resultContosoModels, result.Result);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_GetContoso_Multiple_Invalid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockGetContosoAsync(new List<ContosoModel>());
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.GetContosoAsync();
 
-            // Assert
+            // Verify
             Assert.True(result.Result.Count == 0);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_UpdateContoso_Valid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockUpdateContosoAsync(_updateContosoModel);
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.UpdateContosoAsync(_updateContosoModel);
 
-            // Assert
+            // Verify
             Assert.Equal(_updateContosoModel, result.Result);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_UpdateContoso_Invalid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo().MockUpdateContosoAsyncFails();
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.UpdateContosoAsync(_updateContosoModel);
 
-            // Assert
+            // Verify
             Assert.True(result.Result == null);
+
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_DeleteContoso_Valid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo()
                 .MockDeleteContosoAsync(OperationResult.Deleted)
                 .MockGetContosoAsync(_resultContosoModel);
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.DeleteContosoAsync(3);
 
-            // Assert
+            // Verify
             Assert.Equal(OperationResult.Deleted, result.Result);
             // Also validate that the Delete mock got called one time
             _mockContosoRepo.VerifyDeleteContosoAsync(Times.Once());
 
-
+            // Teardown - Not needed for this test
         }
 
         [Fact]
         public void ContosoService_DeleteContoso_Invalid()
         {
-            // Arrange
+            // Setup
             _mockContosoRepo = new MockContosoRepo()
                 .MockDeleteContosoAsync(OperationResult.NotFound)
                 .MockGetContosoAsyncFails();
             _contosoService = new ContosoService(_classFixture.snapshotSettings, new NullLogger<ContosoService>(), _mockContosoRepo.Object);
 
-            // Act
+            // Exercise
             var result = _contosoService.DeleteContosoAsync(5);
 
-            // Assert
+            // Verify
             Assert.Equal(OperationResult.NotFound, result.Result);
             // Also validate that the Delete mock never got called
             _mockContosoRepo.VerifyDeleteContosoAsync(Times.Never());
+
+            // Teardown - Not needed for this test
         }
 
         #endregion
