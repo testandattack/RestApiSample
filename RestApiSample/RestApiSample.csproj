@@ -5,6 +5,11 @@
     <UserSecretsId>16649807-3f8e-4437-918e-a9e562b1fa52</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\graygeol\source\repos\RestApiSample\RestApiSample.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Azure.Identity" Version="1.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.8.2" />
@@ -27,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Extensions\Extensions.csproj" />
     <ProjectReference Include="..\GtcRest.Interfaces\GtcRest.Interfaces.csproj" />
     <ProjectReference Include="..\GtcRest.Models\GtcRest.Models.csproj" />
     <ProjectReference Include="..\GtcRest.Service\GtcRest.Service.csproj" />

@@ -44,13 +44,14 @@ namespace RestApiSample
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Testing the Testing Strategy API");
+                //c.SwaggerEndpoint("/swagger/v1/swagger.yaml", "Testing the Testing Strategy API");
                 c.RoutePrefix = string.Empty;
 
                 // How far to expand each model in the request when switching to Schema from Example
                 c.DefaultModelExpandDepth(5);
 
                 // Collapse each controller on the main page by default
-                c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);
+                c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.List);
 
                 // Adds the request duration to the response output when executing requests
                 c.DisplayRequestDuration();
@@ -74,6 +75,7 @@ namespace RestApiSample
             {
                 Title = "GtcRest API",
                 Version = $"{version.Major}.{version.Minor}.{version.Build}",
+                Description = "Sample REST API for understanding API design and testing",
                 Contact = new OpenApiContact
                 {
                     Name = "Geoff Gray",
@@ -128,11 +130,13 @@ namespace RestApiSample
         private static void ApplyFilters(SwaggerGenOptions c)
         {
             Log.ForContext<SwaggerConfigOptions>().Information("executing ApplyFilters");
+            //c.OperationFilter<MethodNameOperationFilter>();
 
-            c.OperationFilter<BasicAuthOperationsFilter>();
+            //c.OperationFilter<BasicAuthOperationsFilter>();
             c.DocumentFilter<AddCompanyInfoDocumentFilter>();
-            c.OperationFilter<MethodNameOperationFilter>();
-            c.DocumentFilter<LowercasePathDocumentFilter>();
+            c.DocumentFilter<LowercasePathFilter>();
+            //c.DocumentFilter<CamelCaseComponentFilter>();
+            c.DocumentFilter<AddXSpecIntegrationType>();
         }
 
         private static void GetServerUrl(SwaggerGenOptions c, string baseUrl, IWebHostEnvironment environment)
