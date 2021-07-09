@@ -1,0 +1,112 @@
+{
+  "AscentiaApi": {
+    "AcmfBlobConfiguration": {
+      "AcmfRawReportDestinationBlobContainer": "acmf-raw-report",
+      "AcmfReportContainerName": "acmf-csv",
+    },
+    "AlertingServices": {
+      "AlertQueue": {
+        "BatchMessageCount": "20",
+        "PollingInterval": "600",
+        "ProcessingMaxTime": "300"
+      },
+      "AnalyticAlertingService": {
+        "IsActive": "false",
+        "QueueName": "analytic-maintenance-alert-v3",
+        "StartupDelayInSeconds": "60"
+      },
+      "AviationWeekService": {
+        "IsActive": "True",
+        "QueueName": "new-aircraft"
+      },
+      "CoreAlertingService": {
+        "IsActive": "false",
+        "QueueName": "alerting-queue",
+        "StartupDelayInSeconds": "60"
+      },
+      "CustomAlertingService": {
+        "IsActive": "true",
+        "QueueName": "custom-alerting-queue",
+        "StartupDelayInSeconds": "60"
+      },
+      "CustomPLFAlertingService": {
+        "IsActive": "true",
+        "QueueName": "plf-custom-alerting-queue",
+        "StartupDelayInSeconds": "60"
+      }
+    },
+    "AviationWeekSettings": {
+      "AviationWeekEndpoint": "https://api.aviationweek.com/",
+      "IsActive": "True",
+      "PollingEnabled": "True",
+      "QueueName": "new-aircraft",
+      "RefreshInterval": "86400"
+    },
+    "B2C": {
+      "baseUrl": "https://collins-b2c-apim.azure-api.net/b2c/api",
+    },
+    "B2CEmailService": {
+      "B2CEmailQueue": {
+        "BatchMessageCount": "20",
+        "Name": "b2c-user-email",
+        "PollingInterval": "300",
+        "ProcessMaxTime": "3000",
+        "ProcessingMaxTime": "3000"
+      },
+      "IsActive": "true",
+      "StartupDelayInSeconds": "360"
+    },
+    "BlobAttachmentConfiguration": {
+      "AllowedFileTypes": ".png,.jpg,.docx,.pdf,.msg,.pptx",
+      "AttachmentBlobContainer": "attachments",
+      "MaxFileSizeInMB": "10"
+    },
+    "CleanParseCosmos": {
+      "MinRULogThreshold": "100",
+      "String": "https://ascentia-clean-parse.documents.azure.com:443/"
+    },
+    "CollinsCareEmailService": {
+      "CollinsCareEmailQueue": {
+        "BatchMessageCount": "20",
+        "Name": "collins-care-email",
+        "PollingInterval": "600"
+      },
+      "IsActive": "False",
+      "StartupDelayInSeconds": "360"
+    },
+    "ConnectionStrings": {
+      "Ascentia": "",
+      "AscentiaAdmin": "",
+      "AscentiaData": "",
+      "AscentiaLog": ""
+    },
+    "DSCosmos": {
+      "MinRULogThreshold": "100",
+      "String": "https://cosmosdb-phm-ds-ascentia-prod.documents.azure.com:443/"
+    },
+    "DSCosmosDbCollection": {
+      "CollectionName": "Analytics",
+      "DatabaseName": "PHM"
+    },
+    "FlightAwareService": {
+      "CacheRefreshInterval": "900",
+      "IsActive": "true",
+    },
+    "FullFlightBlobDataSource": {
+      "Container": "full-flight",
+      "DefaultDirectory": "UTAS",
+    },
+    "GeoIpCheck": {
+      "BlackListedCountryCodes": "NK",
+      "Enabled": "false",
+    },
+    "NotificationStorageConfig": {
+      "QueueName": "notification-queue"
+    },
+    "Orion": {
+      "Host": " https://collins-orion-apim.azure-api.net",
+      "Resource": "\t https://iao-orion-api-eastus2.azurewebsites.net"
+    },
+    "StorageKeys": { "utasiaoascentia": "" },
+  }
+}

@@ -25,7 +25,11 @@ namespace RestApiSample
                 openApiDocument.Info.Contact.Extensions.Add("x-company-name", new OpenApiString("GTC"));
                 openApiDocument.Info.Contact.Extensions.Add("x-owner-name", new OpenApiString("Geoff Gray"));
                 openApiDocument.Info.Contact.Extensions.Add("x-owner-emailaddress", new OpenApiString("Geoffrey.Gray@collins.com"));
-                openApiDocument.Info.Contact.Extensions.Add("x-owner-phonenumber", new OpenApiString("704-807-0011"));
+                openApiDocument.Info.Contact.Extensions.Add("x-owner-phonenumber", new OpenApiString("7048070011"));
+                openApiDocument.Info.Contact.Extensions.Add("x-administrator-name", new OpenApiString("Geoff Gray"));
+                openApiDocument.Info.Contact.Extensions.Add("x-administrator-phonenumber", new OpenApiString("7048070011"));
+                openApiDocument.Info.Contact.Extensions.Add("x-administrator-emailaddress", new OpenApiString("Geoffrey.Gray@collins.com"));
+                openApiDocument.Info.Contact.Extensions.Add("x-administrator-responsibilities", new OpenApiString("brew good coffee"));
             }
         }
     }
