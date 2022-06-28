@@ -7,6 +7,7 @@ namespace ContosoRest.Models.Shared
     {
         public SQL SQL { get; set; }
         public Core Core { get; set; }
+        public BrickLinkApiSettings brickLinkApiSettings { get; set; }
 
         public Settings() { }
 
@@ -34,5 +35,17 @@ namespace ContosoRest.Models.Shared
     {
         public string SqlConn_User { get; set; }
         public string SqlConn_Admin { get; set; }
+    }
+
+    public class BrickLinkApiSettings
+    {
+        public string ConsumerKey { get; set; }
+
+        public string ConsumerSecret { get; set; }
+
+        public string TokenValue { get; set; }
+
+        public string TokenSecret { get; set; }
+
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.6.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoRestApiSample", "ContosoRestApiSample\ContosoRestApiSample.csproj", "{872F0F4C-4A86-4222-8C16-4FDA7362926B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoRest.Adapter", "ContosoRest.Adapter\ContosoRest.Adapter.csproj", "{F0CF4A70-8A73-4DF6-9C65-426A593F1588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrickLink.Adapter", "ContosoRest.Adapter\BrickLink.Adapter.csproj", "{F0CF4A70-8A73-4DF6-9C65-426A593F1588}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContosoRest.Database", "ContosoRest.Database\ContosoRest.Database.csproj", "{C4256908-4C25-408C-87F1-92A5CA31CD44}"
 EndProject

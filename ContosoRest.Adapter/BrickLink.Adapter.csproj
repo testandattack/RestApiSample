@@ -1,10 +1,13 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Bricklink_API_Client</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BricklinkSharp" Version="1.1.1" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
     <PackageReference Include="Moq" Version="4.16.1" />
@@ -16,9 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ContosoRest.Adapter\BrickLink.Adapter.csproj" />
-    <ProjectReference Include="..\ContosoRest.Database\ContosoRest.Database.csproj" />
-    <ProjectReference Include="..\ContosoRest.Interfaces\ContosoRest.Interfaces.csproj" />
     <ProjectReference Include="..\ContosoRest.Models\ContosoRest.Models.csproj" />
   </ItemGroup>
 
